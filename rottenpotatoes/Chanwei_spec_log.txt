@@ -1,0 +1,7 @@
+/usr/local/bin/ruby -I/usr/local/lib/ruby/gems/2.6.0/gems/rspec-core-3.7.1/lib:/usr/local/lib/ruby/gems/2.6.0/gems/rspec-support-3.7.1/lib /usr/local/lib/ruby/gems/2.6.0/gems/rspec-core-3.7.1/exe/rspec --pattern spec/\*\*\{,/\*/\*\*\}/\*_spec.rb
+.....
+
+Finished in 0.15832 seconds (files took 0.84136 seconds to load)
+5 examples, 0 failures
+
+Coverage report generated for RSpec to /home/huchanwei123/Desktop/CSCE689_SE_hw/hw-acceptance-unit-test-cycle/rottenpotatoes/coverage. 46 / 55 LOC (83.64%) covered.
