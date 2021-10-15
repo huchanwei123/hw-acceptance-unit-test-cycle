@@ -12,6 +12,7 @@ Background: movies in database
   | Blade Runner | PG     | Ridley Scott |   1982-06-25 |
   | Alien        | R      |              |   1979-05-25 |
   | THX-1138     | R      | George Lucas |   1971-03-11 |
+  | ThreeKingdoms| R      |              |   2010-01-01 |
 
 Scenario: add director to existing movie
   When I go to the edit page for "Alien"
@@ -25,6 +26,7 @@ Scenario: find movie with same director
   Then  I should be on the Similar Movies page for "Star Wars"
   And   I should see "THX-1138"
   But   I should not see "Blade Runner"
+  And   I should not see "ThreeKingdoms"
 
 Scenario: can't find similar movies if we don't know director (sad path)
   Given I am on the details page for "Alien"

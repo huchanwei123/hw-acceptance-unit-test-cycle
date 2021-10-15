@@ -5,11 +5,36 @@ class MoviesController < ApplicationController
     @movie = Movie.find(id) # look up movie by unique ID
     # will render app/views/movies/show.<extension> by default
   end
-
+  
   def index
-    @movies = Movie.all
-  end
+    if params[:ratings].nil? and params[:commit] 
+      session.delete(:ratings_to_show) 
+      session.delete(:sort) 
+    end
+    
+    @all_ratings = ['G','PG','PG-13','R']
+    @ratings_to_show = params[:ratings] || session[:ratings_to_show]
+    @sort = params[:sort] || session[:sort] 
+    
+    case @sort
+    when 'title'
+     @title_header = 'hilite'
+    when 'release_date'
+     @release_date_header = 'hilite'
+    end
+    
+    if @ratings_to_show.nil?
+      @movies = Movie.all
+    else
+      @movies = Movie.where(rating: @ratings_to_show.keys)
+    end
 
+    @movies = @movies.order(@sort)
+    
+    session[:sort] = @sort
+    session[:ratings_to_show] = @ratings_to_show
+  end
+  
   def new
     # default: render 'new' template
   end
@@ -37,6 +62,19 @@ class MoviesController < ApplicationController
     flash[:notice] = "Movie '#{@movie.title}' deleted."
     redirect_to movies_path
   end
+
+  # ================= newly added =================
+  def same_director
+    @movie = Movie.find(params[:id])
+    
+    if @movie.director.blank?
+      flash[:notice] = "'#{@movie.title}' has no director info"
+      redirect_to movies_path
+    else
+      @movies = Movie.same_director(@movie.director)
+    end
+  end
+  # ===============================================
 
   private
   # Making "internal" methods private is not required, but is a common practice.
